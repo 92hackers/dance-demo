@@ -4,7 +4,7 @@
 
 import Head from 'next/head'
 
-export default function contact() {
+export default function Contact() {
   return (
     <>
       <Head>

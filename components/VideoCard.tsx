@@ -16,11 +16,11 @@ export default function VideoCard({
   id, desc, title, imgUrl,
 }: Props) {
   return (
-    <li className="w-[385px] h-[300px] relative">
+    <li className="w-[385px] h-[300px] relative shadow-sm hover:shadow-lg">
       <Link href={`/videos/${id}`}>
         <Image src={imgUrl} alt='poster' fill />
-        <div className="absolute bottom-0 z-50 w-[385px] bg-white p-4">
-          <h3 className="text-lg">{title}</h3>
+        <div className="absolute bottom-0 z-50 w-[385px] bg-white p-4 border">
+          <h3 className="text-lg text-[#c00]">{title}</h3>
           <p className="text-sm text-slate-500">{desc}</p>
         </div>
       </Link>

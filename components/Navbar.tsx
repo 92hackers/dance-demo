@@ -26,8 +26,12 @@ export default function Navbar() {
             <li className="pl-10 pr-10"><Link className="hover:text-[#c00] hover:underline" href="/contact">联系我们</Link></li>
           </ul>
         </div>
-        <div className="profile">
-          <button className="btn">登录</button>
+        <div className="flex items-center">
+          <Link href={`/login`} className="flex">
+            <button type="button" className="transition leading-none inline-block px-5 text-white h-10 w-20 cursor-pointer rounded-lg ring-inset bg-[#c00]">
+              <span>登录</span>
+            </button>
+          </Link>
         </div>
       </div>
     </nav>
