@@ -4,15 +4,17 @@
 
 import { useState, useEffect } from 'react'
 import useSWRMutation from 'swr/mutation'
-import { creator } from '../utils/http'
-
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+import { creator } from '../utils/http'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { trigger, isMutating } = useSWRMutation('/login', creator)
+  const router = useRouter()
 
   async function handleSubmit() {
     if (!email) {
@@ -28,8 +30,8 @@ export default function Login() {
       return alert(result.error)
     }
 
-    // TODO: redirect to user home page
-    console.log(result)
+    // Redirect to user home page
+    router.push(`/users/${result.id}`)
   }
 
   return (

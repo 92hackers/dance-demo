@@ -32,6 +32,11 @@ export default function Navbar() {
               <span>登录</span>
             </button>
           </Link>
+          <Link href={`/signup`} className="flex ml-2">
+            <button type="button" className="transition leading-none inline-block px-5 text-[#c00] h-10 w-20 cursor-pointer rounded-lg ring-inset border">
+              <span>注册</span>
+            </button>
+          </Link>
         </div>
       </div>
     </nav>

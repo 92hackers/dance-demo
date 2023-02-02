@@ -3,8 +3,11 @@
  */
 
 import type { NextApiRequest, NextApiResponse } from 'next'
+import bcrypt from 'bcryptjs'
 
-export default function handler(
+import prisma from '../../utils/db'
+
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
@@ -12,14 +15,24 @@ export default function handler(
     return res.status(405)
   }
 
-  const { username, email, password } = JSON.parse(req.body)
+  const { name, email, password } = JSON.parse(req.body)
 
-  if (!username || !email || !password) {
+  if (!name || !email || !password) {
     return res.status(400).json({ error: '请输入正确的用户名、邮箱、密码' })
   }
 
-  console.log( email, password );
+  // Hash the password
+  const salt = await bcrypt.genSalt(10)
+  const hashedPassword = await bcrypt.hash(password, salt)
 
-  res.status(200).json({ email: email, password: password })
-  // res.status(200).json({ error: 'Invalid' })
+  // create new account
+  try {
+    await prisma.user.create({
+      data: { name: name, email: email, passwordHash: hashedPassword },
+    })
+  } catch (error) {
+    return res.status(400).json({ error: '邮箱重复或数据库错误！' })
+  }
+
+  return res.status(200).json({ data: 'ok' })
 }
