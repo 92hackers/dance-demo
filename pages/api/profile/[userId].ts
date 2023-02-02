@@ -1,0 +1,58 @@
+/**
+ * User Profile
+ */
+
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { LoginStatus } from '@prisma/client'
+
+import prisma from '../../../utils/db'
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<any>
+) {
+  if (req.method !== 'GET') {
+    return res.status(405)
+  }
+
+  const { query, cookies } = req
+
+  const { userId } = query
+  const { token } = cookies
+
+  if (!userId || !token) {
+    return res.status(400).json({ error: '用户没有找到' })
+  }
+
+  // Get user profile from login and user models. no select password hash
+  const record = await prisma.login.findFirst({
+    where: {
+      userId: parseInt(userId, 10),
+      token,
+      status: LoginStatus.ACTIVE,
+    },
+    include: {
+      user: {
+        select: {
+          wallet: true,
+          id: true,
+          email: true,
+          name: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      }
+    },
+  })
+
+  if (!record) {
+    return res.status(400).json({ error: '用户没有找到' })
+  }
+
+  if (!record.id) {
+    return res.status(400).json({ error: '用户没有找到' })
+  }
+
+  const { user }  = record
+  res.status(200).json(user)
+}

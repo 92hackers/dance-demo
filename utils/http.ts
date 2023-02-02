@@ -6,7 +6,7 @@ import useSWR from 'swr'
 
 const apiHost = '/api'
 
-const fetcher = (url: string) => fetch(apiHost + url).then(r => r.json())
+export const fetcher = (url: string) => fetch(apiHost + url).then(r => r.json())
 
 export async function creator(url: string, { arg }) {
   const res = await fetch(apiHost + url, {

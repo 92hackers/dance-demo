@@ -29,6 +29,7 @@ export default async function handler(
       return res.status(400).json({ error: '邮箱不存在' })
     }
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ error: '服务器错误' })
   }
 
@@ -38,11 +39,9 @@ export default async function handler(
     return res.status(400).json({ error: '密码错误' })
   }
 
-  // Set cookies
-  res.setHeader('Set-Cookie', 'loggedIn=true')
-
+  // Store token in cookie
   const token = await bcrypt.genSalt(4)
-  res.setHeader('Set-Cookie', `token=${token}`)
+  res.setHeader('Set-Cookie', `token=${token}; userId=${profile.id}; username=${profile.name}`)
 
   // Store the token
   try {
@@ -53,6 +52,7 @@ export default async function handler(
       },
     })
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ error: '服务器错误' })
   }
 
