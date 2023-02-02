@@ -1,5 +1,16 @@
 # 舞之乐
 
+## Tech Stack
+
+1. Next.js
+2. Prisma
+3. Tailwindcss
+4. Bcrypt
+5. SWR
+6. PostCSS
+7. TypeScript
+8. ESlint
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
