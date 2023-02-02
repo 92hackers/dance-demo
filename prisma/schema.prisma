@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  PENDING
+  STOPPED
+}
+
+model User {
+  id            Int        @id @default(autoincrement())
+  email         String     @unique
+  name          String
+  password_salt String
+  status        UserStatus @default(ACTIVE)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now())
+  wallet        Wallet?
+}
+
+enum WalletStatus {
+  ACTIVE
+  PENDING
+  STOPPED
+}
+
+model Wallet {
+  id        Int          @id @default(autoincrement())
+  status    WalletStatus @default(ACTIVE)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @default(now())
+  balance   Int          @default(0)
+  ownerId   Int          @unique
+  owner     User         @relation(fields: [ownerId], references: [id])
+}
