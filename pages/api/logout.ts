@@ -22,10 +22,12 @@ export default async function handler(
     return res.status(401).json({ error: '缺少用户 id 或者是访问凭证' })
   }
 
+  console.log(userId, token);
+
   // Update Login status
   // Clear Login record, make it status logout
   try {
-    await prisma.login.update({
+    await prisma.login.updateMany({
       where: {
         token,
         userId: parseInt(userId, 10),
@@ -36,14 +38,15 @@ export default async function handler(
       }
     })
   } catch (error) {
+    console.error(error);
     return res.status(401).json({ error: '用户 id 或者是访问凭证错误' })
   }
 
   // Unset cookies
   res.setHeader('Set-Cookie', [
-    `token=''; path=/; HttpOnly`,
-    `userId=''; path=/;`,
-    `username=''; path=/;`,
+    `token=; path=/; HttpOnly`,
+    `userId=; path=/;`,
+    `username=; path=/;`,
   ])
 
   // Response

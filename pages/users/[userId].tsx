@@ -5,24 +5,20 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import useSWR from 'swr'
 
-import { fetcher } from '../../utils/http'
+import useProfile from '../../hooks/useProfile'
 
-export default function aboutUs() {
+export default function UserHomepage() {
   const router = useRouter()
-  const { userId } = router.query
-  const { data: profile, isLoading } = useSWR(userId ? `/profile/${userId}` : null, fetcher)
+  const { userId = '' } = router.query
+  const { profile, isLoading, setUserId } = useProfile({ redirectTo: '/login' })
 
+  // Set user id
   useEffect(() => {
-    if (userId) {
-      if (!isLoading && profile.error) { // Redirect to login page
-        router.push('/login')
-      }
-    }
-  }, [profile, isLoading, userId])
+    setUserId(userId)
+  }, [userId])
 
-  if (isLoading || !profile || profile.error) {
+  if (isLoading || !profile || !profile.id) {
     return (
       <>
         <div className="min-h-screen">
@@ -45,7 +41,7 @@ export default function aboutUs() {
       <div className="min-h-screen">
         <div className="container pt-10">
           <div className="profile mb-24">
-            <h1 className='text-4xl mb-5'>用户主页</h1>
+            <h1 className='text-4xl mb-5'>我的主页</h1>
             <p className='mb-5'>欢迎回来：{profile.name}</p>
             <p className='text-slate'>当前账户余额：{balance}</p>
           </div>

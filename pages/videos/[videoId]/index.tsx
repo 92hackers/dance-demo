@@ -10,7 +10,7 @@ export default function VideoHomepage() {
       <Head>
         <title>播放视频 | 成都舞之乐文化传播有限公司</title>
       </Head>
-      <div>
+      <div className='min-h-screen'>
         <h1>Play video</h1>
       </div>
     </>

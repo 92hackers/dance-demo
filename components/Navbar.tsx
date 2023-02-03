@@ -2,38 +2,58 @@
  * Top Navbar
  */
 
+import { useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import useSWRMutation from 'swr/mutation'
+import { useRouter } from 'next/router'
+import { useSWRConfig } from 'swr'
 
-import axios from 'axios'
+import useProfile from "../hooks/useProfile"
+import { creator } from '../utils/http'
 
-import { useState, useEffect } from "react"
+function parseCookie(cookie: string) {
+  const cookiesarr = cookie.split('; ')
+  const cookiesobj = cookiesarr.reduce((acc, c) => {
+    const [key, value] = c.split('=')
+    acc[key] = value
+    return acc
+  }, {})
+  return cookiesobj
+}
 
 export default function Navbar() {
-  const [profile, setProfile] = useState(null)
+  const router = useRouter()
+  const { trigger, isMutating } = useSWRMutation('/logout', creator)
+  const { setProfile, profile, setUserId } = useProfile({
+    redirectTo: '/login',
+  })
+  const { mutate } = useSWRConfig()
 
   async function handleLogout() {
-    console.log('logged out');
     // Trigger logout api
+    const result = await trigger({}).catch(e => e)
 
-    // redirect to /
+    if (result.error) {
+      return alert(result.error)
+    }
+
+    // Clear the profile state
+    setProfile(null, false)
+
+    // Redirect to /
+    router.push('/')
   }
 
   useEffect(() => {
-    const { cookie } = document
-    const cookiesArr = cookie.split('; ')
-    const cookiesObj = cookiesArr.reduce((acc, c) => {
-      const [key, value] = c.split('=')
-      acc[key] = value
-      return acc
-    }, {})
-    if (cookiesObj.userId && cookiesObj.username) {
-      axios
-        .get(`/api/profile/${cookiesObj.userId}`)
-        .then(res => setProfile(res.data))
-        .catch(err => console.log(err))
+    // Check user id from cookie
+    const cookiesobj = parseCookie(document.cookie)
+    if (cookiesobj.userId && cookiesobj.username) {
+      setUserId(cookiesobj.userId)
     }
-  }, [])
+  }, [router.pathname])
+
+  const isLoggedIn = profile && profile.id
 
   return (
     <nav className="h-20 leading-[5rem] border-b">
@@ -56,7 +76,7 @@ export default function Navbar() {
           </ul>
         </div>
         {
-          !profile && (
+          !isLoggedIn && (
             <div className="flex items-center">
               <Link href={`/login`} className="flex">
                 <button type="button" className="transition leading-none inline-block px-5 text-white h-10 w-20 cursor-pointer rounded-lg ring-inset bg-[#c00]">
@@ -72,7 +92,7 @@ export default function Navbar() {
           )
         }
         {
-          profile && (
+          isLoggedIn && (
             <div className="flex items-center">
               <Link href={`/users/${profile.id}`} className="flex">
                 <button type="button" className="transition leading-none inline-block px-5 text-white h-10 w-30 cursor-pointer rounded-lg ring-inset bg-[#c00]">
