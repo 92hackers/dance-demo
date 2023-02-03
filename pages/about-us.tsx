@@ -4,7 +4,7 @@
 
 import Head from 'next/head'
 
-export default function aboutUs() {
+export default function AboutUs() {
   return (
     <>
       <Head>

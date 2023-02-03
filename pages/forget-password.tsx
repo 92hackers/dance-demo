@@ -11,7 +11,7 @@ import Link from 'next/link'
 
 import { creator } from '../utils/http'
 
-export default function fn() {
+export default function Fn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { trigger, isMutating } = useSWRMutation('/reset-password', creator)
