@@ -10,7 +10,7 @@ export default function Aggrement() {
       <Head>
         <title>用户隐私协议 | 成都舞之乐文化传播有限公司</title>
       </Head>
-      <div className='container mt-5'>
+      <div className='container my-20'>
         <h1 className='text-4xl mb-5 mt-5'>用户服务协议</h1>
         <p>
           1．释本

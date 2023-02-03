@@ -6,7 +6,7 @@
 2. Prisma
 3. Tailwindcss
 4. Bcrypt
-5. SWR
+5. SWR (The hooks used to manage data fetching)
 6. PostCSS
 7. TypeScript
 8. ESlint

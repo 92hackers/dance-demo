@@ -56,6 +56,9 @@ export default function Login() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
                   </button>
+                  <div className='text-sm text-slate-400 pt-5'>
+                    <Link href={`/aggrement`}>查看用户协议</Link>
+                  </div>
                 </div>
                 <div className="py-5">
                   <div className="grid grid-cols-2 gap-1">
