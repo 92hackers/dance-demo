@@ -1,5 +1,5 @@
 /**
- * Creates a new account
+ * Reset password
  */
 
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -15,10 +15,10 @@ export default async function handler(
     return res.status(405)
   }
 
-  const { name, email, password } = JSON.parse(req.body)
+  const { email, password } = JSON.parse(req.body)
 
-  if (!name || !email || !password) {
-    return res.status(400).json({ error: '请输入正确的用户名、邮箱、密码' })
+  if (!email || !password) {
+    return res.status(400).json({ error: '请输入正确的邮箱、密码' })
   }
 
   // Hash the password
@@ -27,8 +27,9 @@ export default async function handler(
 
   // create new account
   try {
-    await prisma.user.create({
-      data: { name: name, email: email, passwordHash: hashedPassword },
+    await prisma.user.update({
+      where: { email: email },
+      data: { passwordHash: hashedPassword },
     })
   } catch (error) {
     console.log(error);
