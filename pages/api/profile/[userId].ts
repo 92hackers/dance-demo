@@ -27,7 +27,7 @@ export default async function handler(
   // Get user profile from login and user models. no select password hash
   const record = await prisma.login.findFirst({
     where: {
-      userId: parseInt(userId, 10),
+      userId: parseInt(userId.toString(), 10),
       token,
       status: LoginStatus.ACTIVE,
     },

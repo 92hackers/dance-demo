@@ -15,7 +15,7 @@ export default function UserHomepage() {
 
   // Set user id
   useEffect(() => {
-    setUserId(userId)
+    setUserId(userId.toString())
   }, [userId])
 
   if (isLoading || !profile || !profile.id) {

@@ -50,7 +50,7 @@ export const videosSecond = [
   },
 ]
 
-export function parseCookie(cookie: string) {
+export function parseCookie(cookie: string): any {
   const cookiesarr = cookie.split('; ')
   const cookiesobj = cookiesarr.reduce((acc, c) => {
     const [key, value] = c.split('=')
