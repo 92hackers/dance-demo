@@ -10,14 +10,18 @@
 #------------------------
 FROM node:lts-alpine3.16 AS deps
 
+RUN npm install pnpm -g --registry=https://registry.npm.taobao.org/
+
 WORKDIR /dance
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
+RUN pnpm install --registry=https://registry.npm.taobao.org/
 
 #------------------------
 # builder: Build artifacts
 #------------------------
 FROM node:lts-alpine3.16 as builder
+
+RUN npm install pnpm -g --registry=https://registry.npm.taobao.org/
 
 WORKDIR /dance
 COPY --from=deps /dance/node_modules ./node_modules/
@@ -31,6 +35,8 @@ RUN pnpm build
 # Final production image
 #------------------------
 FROM node:lts-alpine3.16 as runner
+RUN npm install pnpm -g --registry=https://registry.npm.taobao.org/
+
 WORKDIR /dance
 ENV NODE_ENV production
 ENV PORT 3000
