@@ -18,18 +18,12 @@ export default function Contact() {
               <p className="subtitle"></p>
             </div>
             <div className="detail text-slate-500">
-              <p><span>联系人：周经理</span>
+              <p><span>联系人：杨冬</span>
                 <br />
-                <span>手　机：13888888888</span>
+                <span>电　话：028-64100072</span>
                 <br />
-                <span>电　话：400-1234-5678</span>
-                <br />
-                <span>传　真：0527-88888888</span>
-                <br />
-                <span>Ｑ　Ｑ：1000000</span><br />
-                <span>微　信：Wx88888888</span><br />
-                <span>邮　箱：admin@admin.cn</span><br />
-                <span>地　址：这里是您的公司地址人民路123号</span>
+                <span>邮　箱：18738630279@163.com</span><br />
+                <span>地　址：中国（四川）自由贸易试验区成都高新区天府大道中段1388号1栋5层585号</span>
               </p>
             </div>
           </div>

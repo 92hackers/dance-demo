@@ -63,6 +63,7 @@ export default function Navbar() {
             <li className="pl-10 pr-10"><Link className="hover:text-[#c00] hover:underline" href="/videos">比赛视频</Link></li>
             <li className="pl-10 pr-10"><Link className="hover:text-[#c00] hover:underline" href="/about-us">关于我们</Link></li>
             <li className="pl-10 pr-10"><Link className="hover:text-[#c00] hover:underline" href="/contact">联系我们</Link></li>
+            <li className="pl-10 pr-10"><Link className="hover:text-[#c00] hover:underline" href="/aggrement">用户协议</Link></li>
           </ul>
         </div>
         {
