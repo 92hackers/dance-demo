@@ -7,20 +7,11 @@ import Link from "next/link"
 import Image from "next/image"
 import useSWRMutation from 'swr/mutation'
 import { useRouter } from 'next/router'
-import { useSWRConfig } from 'swr'
 
 import useProfile from "../hooks/useProfile"
 import { creator } from '../utils/http'
 
-function parseCookie(cookie: string) {
-  const cookiesarr = cookie.split('; ')
-  const cookiesobj = cookiesarr.reduce((acc, c) => {
-    const [key, value] = c.split('=')
-    acc[key] = value
-    return acc
-  }, {})
-  return cookiesobj
-}
+import { parseCookie } from "../utils"
 
 export default function Navbar() {
   const router = useRouter()
@@ -28,7 +19,6 @@ export default function Navbar() {
   const { setProfile, profile, setUserId } = useProfile({
     redirectTo: '/login',
   })
-  const { mutate } = useSWRConfig()
 
   async function handleLogout() {
     // Trigger logout api
