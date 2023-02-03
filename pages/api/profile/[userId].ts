@@ -21,7 +21,7 @@ export default async function handler(
   const { token } = cookies
 
   if (!userId || !token) {
-    return res.status(400).json({ error: '用户没有找到' })
+    return res.status(401).json({ error: '缺少用户 id 或者是访问凭证' })
   }
 
   // Get user profile from login and user models. no select password hash

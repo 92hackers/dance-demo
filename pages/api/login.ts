@@ -41,7 +41,11 @@ export default async function handler(
 
   // Store token in cookie
   const token = await bcrypt.genSalt(4)
-  res.setHeader('Set-Cookie', `token=${token}; userId=${profile.id}; username=${profile.name}`)
+  res.setHeader('Set-Cookie', [
+    `token=${token}; path=/; HttpOnly`,
+    `userId=${profile.id}; path=/;`,
+    `username=${profile.name}; path=/;`,
+  ])
 
   // Store the token
   try {
