@@ -19,3 +19,4 @@ coverage
 codeship-services.yml
 codeship-steps.yml
 logs
+.env
