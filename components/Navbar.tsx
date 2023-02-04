@@ -54,7 +54,7 @@ export default function Navbar() {
               <Image
                 width={110}
                 height={80}
-                src="http://www.dancedreamtv.com/static/upload/image/20221018/1666075430902352.jpg"
+                src="http://static.dancedreamtv.com/static/upload/image/20221018/1666075430902352.jpg"
                 alt="logo"
               />
             </Link>

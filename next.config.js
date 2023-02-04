@@ -19,7 +19,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'www.dancedreamtv.com',
+        hostname: 'static.dancedreamtv.com',
         port: '',
         pathname: '/static/**',
       },

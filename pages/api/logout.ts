@@ -3,7 +3,7 @@
  */
 
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { LoginStatus } from '@prisma/client'
+import { LoginStatus } from '../../utils'
 
 import prisma from '../../utils/db'
 

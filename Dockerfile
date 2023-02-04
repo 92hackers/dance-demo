@@ -1,4 +1,4 @@
-# Dockerfile for wu-zhi-le
+# Dockerfile for dance
 #
 # Reference:
 # 1. https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
@@ -11,26 +11,37 @@
 FROM node:lts-alpine3.16 AS deps
 RUN npm install pnpm -g --registry=https://registry.npm.taobao.org/
 
-WORKDIR /app
+WORKDIR /dance
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --registry=https://registry.npm.taobao.org/
 
 #------------------------
 # builder: Build artifacts
 #------------------------
+FROM node:lts-alpine3.16 as builder
+RUN npm install pnpm -g --registry=https://registry.npm.taobao.org/
+
+WORKDIR /dance
+COPY --from=deps /dance/node_modules ./node_modules/
 COPY . .
+
+# Generate prisma client
+RUN pnpm install --registry=https://registry.npm.taobao.org/
+RUN npx prisma generate
 
 # Disable Next.js telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
-
-# Generate prisma clients.
-RUN npx prisma generate
-
 RUN pnpm build
 
 #------------------------
 # Final production image
 #------------------------
+FROM node:lts-alpine3.16 as runner
+RUN npm install pnpm -g --registry=https://registry.npm.taobao.org/
+
+RUN pnpm add prisma --registry=https://registry.npm.taobao.org/
+
+WORKDIR /dance
 ENV NODE_ENV production
 ENV PORT 3000
 
@@ -40,9 +51,12 @@ ENV NEXT_TELEMETRY_DISABLED 1
 # RUN addgroup --system --gid 1001 app
 # RUN adduser --system --uid 1001 app
 
-# Copy all artifacts
-# COPY --from=builder /dance/public ./public
-# COPY --from=builder /dance/package.json ./package.json
+# Copy all artifacts, prisma schema
+COPY ./prisma/* ./prisma/
+COPY --from=builder /dance/public ./public
+COPY --from=builder /dance/package.json ./package.json
+COPY --from=builder /dance/.next/standalone ./
+COPY --from=builder /dance/.next/static ./.next/static
 # COPY --from=builder --chown=app:app /dance/.next/standalone ./
 # COPY --from=builder --chown=app:app /dance/.next/static ./.next/static
 

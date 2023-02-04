@@ -26,7 +26,7 @@ export default function AboutUs() {
               <p><br/></p>
               <p>公司制作队伍稳定精良，遵循专业化和精益求精的准则，创作的每一部剧目都成为具有市场影响力的电视精品，凭借其深度的内容、完善的制作、出色的销售，获得了业界的尊敬和广泛认可。</p>
               <p><br/></p>
-              <p className='flex mt-5 content-center justify-center'><img src="http://www.dancedreamtv.com/static/upload/image/20200512/1589265249349458.jpg" /></p>
+              <p className='flex mt-5 content-center justify-center'><img src="http://static.dancedreamtv.com/static/upload/image/20200512/1589265249349458.jpg" /></p>
               </div>
           </div>
         </div>

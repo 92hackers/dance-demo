@@ -18,7 +18,7 @@ import { videosFirst, videosSecond } from '../../../utils'
 const videos = videosFirst.concat(videosSecond)
 
 export default function VideoHomepage() {
-  const [video, setVideo] = useState({ title: '', desc: '', imgUrl: 'https://www.bilibili.com/video/BV18S4y1E7Rz/?share_source=copy_web', playUrl: 'https://www.bilibili.com/video/BV18S4y1E7Rz/?share_source=copy_web' })
+  const [video, setVideo] = useState({ title: '', desc: '', imgUrl: 'http://static.dancedreamtv.com/static/upload/image/20221023/1666502498622197.jpg', playUrl: 'https://www.bilibili.com/video/BV18S4y1E7Rz/?share_source=copy_web' })
   const router = useRouter()
   const { profile, setUserId } = useProfile({
     redirectTo: '/login',

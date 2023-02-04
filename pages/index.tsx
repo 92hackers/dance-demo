@@ -13,7 +13,7 @@ export default function Home() {
       <div className="pb-24">
         <div className='relative h-[870px]'>
           <Image
-            src={'http://www.dancedreamtv.com/static/upload/image/20221023/1666501259248764.jpg'}
+            src={'http://static.dancedreamtv.com/static/upload/image/20221023/1666501259248764.jpg'}
             alt="dance"
             fill
           />
