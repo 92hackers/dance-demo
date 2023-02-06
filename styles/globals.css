@@ -22,3 +22,7 @@ a {
 ul {
   list-style: none;
 }
+
+.video-react-poster {
+  background-size: cover !important;
+}

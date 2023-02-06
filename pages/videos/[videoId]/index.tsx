@@ -7,9 +7,9 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import Image from 'next/image'
-import Link from 'next/link'
 
 import useProfile from '../../../hooks/useProfile'
+import Video from '../../../components/Video'
 
 import { parseCookie } from '../../../utils'
 
@@ -56,20 +56,19 @@ export default function VideoHomepage() {
           <h1 className='text-4xl mb-5'>播放视频</h1>
           <div className="video flex items-center justify-center">
             <div className="content">
-              <p>名字：{video.title}</p>
-              <p>简介：{video.desc}</p>
+              <p className='text-2xl'>{video.title}</p>
+              <p>{video.desc}</p>
               {
                 isLoggedIn && (
                   <div>
-                    <p className='my-10'>点击图片观看视频</p>
-                    <Link href={video.playUrl} target="_blank">
-                      <Image
-                        width={800}
-                        height={500}
-                        src={video.imgUrl}
-                        alt={'poster'}
+                    <p className='py-10'>点击图片中播放按钮来播放视频：</p>
+                    <div className='w-[800px]'>
+                      <Video
+                        poster={video.imgUrl}
+                        src={video.playUrl}
                       />
-                    </Link>
+                    </div>
+                    <p className='text-slate-500 py-5'>注意：当前视频为预览版，完整版需要付费观看，请在 我的主页 充值再观看。</p>
                   </div>
                 )
               }
