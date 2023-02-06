@@ -4,6 +4,7 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 import bcrypt from 'bcryptjs'
+import { Buffer } from 'buffer'
 
 import prisma from '../../utils/db'
 
@@ -41,10 +42,17 @@ export default async function handler(
 
   // Store token in cookie
   const token = await bcrypt.genSalt(4)
+
+  // Encoded user name
+  const encoded = Buffer.from(profile.name)
+  const encodedData = encoded.toString('base64')
+
+  console.log('Encoded user name: ' + encodedData);
+
   res.setHeader('Set-Cookie', [
     `token=${token}; path=/; HttpOnly`,
     `userId=${profile.id}; path=/;`,
-    `username=${profile.name}; path=/;`,
+    `username=${encodedData}; path=/;`,
   ])
 
   // Store the token
