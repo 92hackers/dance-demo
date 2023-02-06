@@ -13,10 +13,11 @@ export default async function handler(
   res: NextApiResponse<any>
 ) {
   if (req.method !== 'POST') {
-    return res.status(405)
+    return res.status(405).end()
   }
 
-  const { email, password } = JSON.parse(req.body)
+  const body = typeof req.body === 'object' ? req.body : JSON.parse(req.body)
+  const { email, password } = body
 
   if (!email || !password) {
     return res.status(400).json({ error: '密码或邮箱错误' })
