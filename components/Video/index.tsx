@@ -11,15 +11,23 @@ import styles from './index.module.scss'
 
 export interface VideoProps {
   poster: string
-  src: string
+  src: string,
+  onPlay: Function,
 }
 
 export default function Video({
+  onPlay,
   poster,
   src,
 }: VideoProps): React.ReactElement {
   const [play, setPlay] = useState<boolean>(false);
   let player = useRef(null);
+
+  function handlePlay() {
+    setPlay(true)
+    onPlay()
+  }
+
   return (
     // use id becase add the weight
     <div id={styles.videoWrapper}>
@@ -27,7 +35,7 @@ export default function Video({
         poster={!play && poster} // fix the poster not hidden in wechat environment
         src={src}
         preload="metadata"
-        onPlay={() => {setPlay(true)}}
+        onPlay={handlePlay}
         ref={player}
       >
         <LoadingSpinner/>
@@ -37,15 +45,6 @@ export default function Video({
           autoHide
         />
       </Player>
-      {
-        !play &&
-        <div className={styles.startVideo}
-             onClick={() => {
-               player.current.play();
-               setPlay(true);
-             }}
-        />
-      }
     </div>
   )
 }

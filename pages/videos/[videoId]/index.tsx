@@ -18,7 +18,13 @@ import { videosFirst, videosSecond } from '../../../utils'
 const videos = videosFirst.concat(videosSecond)
 
 export default function VideoHomepage() {
-  const [video, setVideo] = useState({ title: '', desc: '', imgUrl: 'http://static.dancedreamtv.com/static/upload/image/20221023/1666502498622197.jpg', playUrl: 'https://www.bilibili.com/video/BV18S4y1E7Rz/?share_source=copy_web' })
+  const [video, setVideo] = useState({
+    title: '', desc: '',
+    imgUrl: 'http://static.dancedreamtv.com/static/upload/image/20221023/1666502498622197.jpg',
+    playUrl: 'https://www.bilibili.com/video/BV18S4y1E7Rz/?share_source=copy_web',
+    fullVersionPlayUrl: 'https://www.bilibili.com/video/BV18S4y1E7Rz/?share_source=copy_web',
+  })
+
   const router = useRouter()
   const { profile, setUserId } = useProfile({
     redirectTo: '/login',
@@ -46,6 +52,9 @@ export default function VideoHomepage() {
 
   const isLoggedIn = profile && profile.id
 
+  const { wallet } = profile || {}
+  const balance = wallet ? wallet.balance : 0
+
   return (
     <>
       <Head>
@@ -61,27 +70,43 @@ export default function VideoHomepage() {
               {
                 isLoggedIn && (
                   <div>
-                    <p className='py-10'>点击图片中播放按钮来播放视频：</p>
-                    <div className='w-[800px]'>
-                      <Video
-                        poster={video.imgUrl}
-                        src={video.playUrl}
-                      />
-                    </div>
-                    <p className='text-slate-500 py-5'>注意：当前视频为预览版，完整版需要付费观看，请在 我的主页 充值再观看。</p>
+                    {
+                      balance > 0 ? (
+                        <div>
+                          <p className='py-10'>点击图片中播放按钮来播放视频：</p>
+                          <div className='w-[800px]'>
+                            <Video
+                              onPlay={() => {}}
+                              poster={video.imgUrl}
+                              src={video.playUrl}
+                            />
+                          </div>
+                        </div>
+                      ) : (
+                        <div>
+                          <p className='text-[#c00] py-5'>注意：当前视频需要付费后才能观看，请登录后在 我的主页 充值后再观看。</p>
+                          <Image
+                            width={800}
+                            height={500}
+                            src={video.imgUrl}
+                            alt={`poster of video`}
+                          />
+                        </div>
+                      )
+                    }
                   </div>
                 )
               }
               {
                 !isLoggedIn && (
                   <div>
-                    <p className='my-10 text-[#c00]'>提示：该视频需要登录后才能观看，请点击右上角登录按钮进行登录。</p>
-                    <div className="img mt-5 cursor-pointer">
-                      <Image
-                        width={800}
-                        height={500}
-                        src={video.imgUrl}
-                        alt={'poster'}
+                    <p className='text-[#c00] py-5'>注意：当前视频为预览版，完整版需要付费观看，请登录后在 我的主页 充值后再观看。</p>
+                    <p className='mb-5'>点击图片中播放按钮来播放视频：</p>
+                    <div className='w-[800px]'>
+                      <Video
+                        onPlay={() => {}}
+                        poster={video.imgUrl}
+                        src={video.playUrl}
                       />
                     </div>
                   </div>

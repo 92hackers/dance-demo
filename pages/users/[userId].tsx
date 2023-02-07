@@ -70,7 +70,7 @@ export default function UserHomepage() {
               {
                 showChargeQrCode && (
                   <div className="qrcode">
-                    <p className='mb-5'>1. 使用支付宝扫描以下付款码进行充值，充值完成后联系客服告知充值金额和上方用户 ID 即可完成充值操作。</p>
+                    <p className='mb-5'>1. 使用支付宝扫描以下付款码进行充值，记得在备注中添加您的用户 ID，充值完成后联系客服告知充值金额和上方用户 ID 即可完成充值操作。</p>
                     <p className='mb-5'>2. 再次单击上方的 充值 按钮以关闭收款二维码。</p>
                     <Image
                       width={500}
